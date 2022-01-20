@@ -2,6 +2,7 @@ package com.zee.zee5_app;
 
 import com.zee.zee5_app.dto.Register;
 import com.zee.zee5_app.service.UserService;
+import com.zee.zee5_app.service.impl.UserServiceImpl;
 
 public class Main {
 
@@ -18,7 +19,7 @@ public class Main {
 		System.out.println(register.toString());
 		System.out.println(register.getEmail());
 		
-		UserService service = UserService.getInstance();
+		UserService service = UserServiceImpl.getInstance();
 		for(int i = 1; i <= 19; i++) {
 			Register register2 = new Register();
 			register2.setId("ab00"+i);
