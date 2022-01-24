@@ -1,13 +1,17 @@
 package com.zee.zee5_app.repository.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeSet;
+
 import com.zee.zee5_app.dto.Series;
+import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.repository.SeriesRepository;
 
 public class SeriesRepositoryImpl implements SeriesRepository {
 	
-	private Series[] seriesP = new Series[10];
-	private static int seriesCount = -1;
-	
+	private TreeSet<Series> set = new TreeSet<Series>();
 	private SeriesRepositoryImpl() {
 		// TODO Auto-generated constructor stub
 	}
@@ -18,58 +22,59 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			seriesRepository = new SeriesRepositoryImpl();
 		return seriesRepository;
 	}
-
 	@Override
 	public String addSeries(Series series) {
 		// TODO Auto-generated method stub
-		if(seriesCount==seriesP.length-1) {
-			Series temp[] = new Series[seriesP.length*2];
-			System.arraycopy(seriesP, 0, temp, 0, seriesP.length);
-			seriesP = temp;
-		}
-		seriesP[++seriesCount] = series;
-		return "Success";
+		boolean result = this.set.add(series);
+		if(result)
+			return "Success";
+		return "Fail";
 	}
-
 	@Override
-	public Series getSeriesById(String id) {
+	public Optional<Series> getSeriesById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		for (Series series : seriesP) {
-			if(series!=null && series.getId().equals(id))
-				return series;
+		Series series2 = null;
+		for (Series series : set) {
+			if(series.getId().equals(id)) {
+				series2 = series;
+				break;
+			}
 		}
-		return null;
+		return Optional.of(Optional.ofNullable(series2).orElseThrow(() -> new IdNotFoundException("id not found")));
 	}
-
 	@Override
 	public Series[] getAllSeries() {
 		// TODO Auto-generated method stub
-		return seriesP;
+		Series series[] = new Series[set.size()];
+		return set.toArray(series);
+	}
+	@Override
+	public String modifySeries(String id, Series series) throws IdNotFoundException {
+		// TODO Auto-generated method stub
+		String result = this.deleteSeries(id);
+		if(result=="Failed")
+			return "Failed";
+		result = this.addSeries(series);
+		if(result=="Fail")
+			return "Failed";
+		return "Updated";
+		
+	}
+	@Override
+	public String deleteSeries(String id) throws IdNotFoundException {
+		// TODO Auto-generated method stub
+		Optional<Series> optional = this.getSeriesById(id);
+		boolean result = set.remove(optional.get());
+		if(result)
+			return "Deleted";
+		return "Failed";
+	}
+	@Override
+	public List<Series> getAllSeriesDetails() {
+		// TODO Auto-generated method stub
+		return new ArrayList<Series>(set);
 	}
 
-	@Override
-	public String modifySeries(String id, Series series) {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < seriesP.length; i++) {
-			if(seriesP[i].getId().equals(id)) {
-				seriesP[i] = series;
-				return "Modified";
-			}
-		}
-		return "Id does not exist";
-	}
-
-	@Override
-	public String deleteSeries(String id) {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < seriesP.length; i++) {
-			if(seriesP[i].getId().equals(id)) {
-				System.arraycopy(seriesP, i+1, seriesP, i, seriesCount-i);
-				seriesP[seriesCount--] = null;
-				return "Deleted";
-			}
-		}
-		return "Id does not exist";
-	}
+	
 
 }

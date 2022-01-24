@@ -1,6 +1,10 @@
 package com.zee.zee5_app.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.zee.zee5_app.dto.Movie;
+import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.repository.MovieRepository;
 import com.zee.zee5_app.repository.impl.MovieRepositoryImpl;
 import com.zee.zee5_app.service.MovieService;
@@ -26,7 +30,7 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public Movie getMovieById(String id) {
+	public Optional<Movie> getMovieById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		return movieRepository.getMovieById(id);
 	}
@@ -38,15 +42,21 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public String modifyMovie(String id, Movie movie) {
+	public String modifyMovie(String id, Movie movie) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		return movieRepository.modifyMovie(id, movie);
 	}
 
 	@Override
-	public String deleteMovie(String id) {
+	public String deleteMovie(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		return movieRepository.deleteMovie(id);
+	}
+
+	@Override
+	public List<Movie> getAllMovieDetails() {
+		// TODO Auto-generated method stub
+		return movieRepository.getAllMovieDetails();
 	}
 
 }

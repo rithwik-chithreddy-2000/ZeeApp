@@ -1,6 +1,13 @@
 package com.zee.zee5_app;
 
+import java.util.Optional;
+
 import com.zee.zee5_app.dto.Register;
+import com.zee.zee5_app.exception.IdNotFoundException;
+import com.zee.zee5_app.exception.InvalidEmailException;
+import com.zee.zee5_app.exception.InvalidIdLengthException;
+import com.zee.zee5_app.exception.InvalidNameException;
+import com.zee.zee5_app.exception.InvalidPasswordException;
 import com.zee.zee5_app.service.UserService;
 import com.zee.zee5_app.service.impl.UserServiceImpl;
 
@@ -8,35 +15,62 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Register register = new Register();
-		
-		register.setFirstName("Rithwik");
-		register.setLastName("Chithreddy");
-		register.setEmail("rithwik@gmail.com");
-		register.setPassword("rithwik123");
-		
-		System.out.println(register);
-		System.out.println(register.toString());
-		System.out.println(register.getEmail());
-		
 		UserService service = UserServiceImpl.getInstance();
 		for(int i = 1; i <= 19; i++) {
 			Register register2 = new Register();
-			register2.setId("ab00"+i);
-			register2.setFirstName("Rithwik"+i);
-			register2.setLastName("Chithreddy"+i);
-			register2.setPassword("rithwik123");
+			try {
+				register2.setId("ab0000"+i);
+				register2.setFirstName("Rithwik"+i);
+				register2.setLastName("Chithreddy"+i);
+				register2.setPassword("rithwik123");
+			} catch (InvalidIdLengthException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidNameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidPasswordException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			String result = service.addUser(register2);
 			System.out.println(result+i);
 		}
 		
-		Register register2 = service.getUserById("ab001");
-		System.out.println(register2!=null);
-		
-		for (Register register3 : service.getAllUsers()) {
-			if(register3!=null)
-				System.out.println(register3);
+		try {
+			Optional<Register> optional = service.getUserById("ab00001");
+			System.out.println(optional.get());
+		} catch (IdNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
+		try {
+			Register register4 = new Register("rc00001", "Rithwik", "Chithreddy", "rithwikch@gmail.com", "rithwik123");
+			System.out.println(register4);
+		} catch (InvalidIdLengthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidNameException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidEmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidPasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		service.getAllUserDetails().forEach(e->System.out.println(e));
+		
+//		try {
+//			System.out.println(service.deleteUserById("ab00002"));
+//		} catch (IdNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		service.getAllUserDetails().forEach(e->System.out.println(e));
 
 	}
 

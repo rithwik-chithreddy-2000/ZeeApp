@@ -1,13 +1,17 @@
 package com.zee.zee5_app.repository.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeSet;
+
 import com.zee.zee5_app.dto.Register;
+import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.repository.UserRepository;
 
 public class UserRepositoryImpl implements UserRepository {
-
-	private Register[] registers = new Register[10];
-	private static int count = -1;
 	
+	private TreeSet<Register> set = new TreeSet<Register>();
 	private UserRepositoryImpl() {
 		// TODO Auto-generated constructor stub
 	}
@@ -18,58 +22,59 @@ public class UserRepositoryImpl implements UserRepository {
 			repository = new UserRepositoryImpl();
 		return repository;
 	}
-	
 	@Override
 	public String addUser(Register register) {
 		// TODO Auto-generated method stub
-		if(count==registers.length-1) {
-			Register temp[] = new Register[registers.length*2];
-			System.arraycopy(registers, 0, temp, 0, registers.length);
-			registers = temp;
-		}
-		registers[++count] = register;
-		return "Success";
+		boolean result = this.set.add(register);
+		if(result)
+			return "Success";
+		return "Fail";
 	}
-
 	@Override
-	public String updateUser(String id, Register register) {
+	public String updateUser(String id, Register register) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < registers.length; i++) {
-			if(registers[i].getId().equals(id)) {
-				registers[i] = register;
-				return "Updated";
+		String result = this.deleteUserById(id);
+		if(result=="Failed")
+			return "Failed";
+		result = this.addUser(register);
+		if(result=="Fail")
+			return "Failed";
+		return "Updated";
+	}
+	@Override
+	public Optional<Register> getUserById(String id) throws IdNotFoundException {
+		// TODO Auto-generated method stub
+		Register register2 = null;
+		for (Register register : set) {
+			if(register.getId().equals(id)) {
+				register2 = register;
+				break;
 			}
 		}
-		return "Id does not exist";
+		return Optional.of(Optional.ofNullable(register2).orElseThrow(() -> new IdNotFoundException("id not found")));
 	}
-
-	@Override
-	public Register getUserById(String id) {
-		// TODO Auto-generated method stub
-		for (Register register : registers) {
-			if(register != null && register.getId().equals(id))
-				return register;
-		}
-		return null;
-	}
-
 	@Override
 	public Register[] getAllUsers() {
 		// TODO Auto-generated method stub
-		return registers;
+		Register register[] = new Register[set.size()];
+		return set.toArray(register);
 	}
-
 	@Override
-	public String deleteUserById(String id) {
+	public String deleteUserById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < registers.length; i++) {
-			if(registers[i].getId().equals(id)) {
-				System.arraycopy(registers, i+1, registers, i, count-i);
-				registers[count--] = null;
-				return "Deleted";
-			}
-		}
-		return "Id does not exist";
+		Optional<Register> optional = this.getUserById(id);
+		boolean result = set.remove(optional.get());
+		if(result)
+			return "Deleted";
+		return "Failed";
+	}
+	@Override
+	public List<Register> getAllUserDetails() {
+		// TODO Auto-generated method stub
+//		ArrayList<Register> arrayList = new ArrayList<Register>(set);
+//		Collections.sort(arrayList);
+//		return arrayList;
+		return new ArrayList<Register>(set.descendingSet());
 	}
 
 }
