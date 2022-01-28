@@ -30,21 +30,21 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public String deleteCredentials(String userName) {
+	public String deleteCredentials(String username) {
 		// TODO Auto-generated method stub
-		return loginRepository.deleteCredentials(userName);
+		return loginRepository.deleteCredentials(username);
 	}
 
 	@Override
-	public String changePassword(String userName, String password) {
+	public String changePassword(String username, String password) {
 		// TODO Auto-generated method stub
-		return loginRepository.changePassword(userName, password);
+		return loginRepository.changePassword(username, password);
 	}
 
 	@Override
-	public String changeRole(String userName, ROLE role) {
+	public String changeRole(String username, ROLE role) {
 		// TODO Auto-generated method stub
-		return loginRepository.changeRole(userName, role);
+		return loginRepository.changeRole(username, role);
 	}
 
 }

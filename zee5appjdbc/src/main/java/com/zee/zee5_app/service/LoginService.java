@@ -6,8 +6,8 @@ import com.zee.zee5_app.dto.ROLE;
 public interface LoginService {
 	
 	public String addCredentials(Login login);
-	public String deleteCredentials(String userName);
-	public String changePassword(String userName,String password);
-	public String changeRole(String userName, ROLE role);
+	public String deleteCredentials(String username);
+	public String changePassword(String username,String password);
+	public String changeRole(String username, ROLE role);
 
 }

@@ -19,60 +19,50 @@ import com.zee.zee5_app.service.impl.UserServiceImpl;
 
 public class Main {
 
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		try {
-//			UserService service = UserServiceImpl.getInstance();
-//			Register register = new Register("reg0006", "Eishika", "Chithreddy", "eishika@gmail.com", "eish123", null);
-//			register.setContactNumber(new BigDecimal("9321654870"));
-//			String result = service.addUser(register);
-//			System.out.println(result);
-//		} catch (InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException | IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-////		try {
-////			UserService service = UserServiceImpl.getInstance();
-////			Optional<Register> register = service.getUserById("reg0001");
-////			System.out.println(register.get());
-////		} catch (IOException | IdNotFoundException | InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException e) {
-////			// TODO Auto-generated catch block
-////			e.printStackTrace();
-////		}
-//		
-////		try {
-////			UserService service = UserServiceImpl.getInstance();
-////			String result = service.deleteUserById("reg0006");
-////			System.out.println(result);
-////		} catch (IdNotFoundException | IOException e) {
-////			// TODO Auto-generated catch block
-////			e.printStackTrace();
-////		}
-//		
-////		try {
-////			UserService service = UserServiceImpl.getInstance();
-////			Optional<List<Register>> optional = service.getAllUserDetails();
-////			if(optional.isEmpty())
-////				System.out.println("There is no records");
-////			else
-////				optional.get().forEach(e->System.out.println(e));
-////			
-////		} catch (IOException | InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException e) {
-////			// TODO Auto-generated catch block
-////			e.printStackTrace();
-////		}
-//
-//	}
-	
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 		try {
-			LoginService service = LoginServiceImpl.getInstance();
-			System.out.println(service.changeRole("eishika@gmail.com", ROLE.ROLE_ADMIN));
-		} catch (IOException e) {
+			UserService service = UserServiceImpl.getInstance();
+			Register register = new Register("reg0006", "Eishika", "Chithreddy", "eishika@gmail.com", "eish123", null);
+			register.setContactNumber(new BigDecimal("9321654870"));
+			String result = service.addUser(register);
+			System.out.println(result);
+		} catch (InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+//		try {
+//			UserService service = UserServiceImpl.getInstance();
+//			Optional<Register> register = service.getUserById("reg0001");
+//			System.out.println(register.get());
+//		} catch (IOException | IdNotFoundException | InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+//		try {
+//			UserService service = UserServiceImpl.getInstance();
+//			String result = service.deleteUserById("reg0006");
+//			System.out.println(result);
+//		} catch (IdNotFoundException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+//		try {
+//			UserService service = UserServiceImpl.getInstance();
+//			Optional<List<Register>> optional = service.getAllUserDetails();
+//			if(optional.isEmpty())
+//				System.out.println("There is no records");
+//			else
+//				optional.get().forEach(e->System.out.println(e));
+//			
+//		} catch (IOException | InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
 	}
 
 }

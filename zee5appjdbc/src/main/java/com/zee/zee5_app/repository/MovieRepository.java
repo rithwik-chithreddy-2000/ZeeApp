@@ -5,14 +5,16 @@ import java.util.Optional;
 
 import com.zee.zee5_app.dto.Movie;
 import com.zee.zee5_app.exception.IdNotFoundException;
+import com.zee.zee5_app.exception.InvalidIdLengthException;
+import com.zee.zee5_app.exception.InvalidNameException;
 
 public interface MovieRepository {
 	
 	public String addMovie(Movie movie);
-	public Optional<Movie> getMovieById(String id) throws IdNotFoundException;
-	public Movie[] getAllMovies();
+	public Optional<Movie> getMovieById(String id) throws IdNotFoundException, InvalidIdLengthException, InvalidNameException;
+	public Movie[] getAllMovies() throws InvalidIdLengthException, InvalidNameException;
 	public String modifyMovie(String id, Movie movie) throws IdNotFoundException;
 	public String deleteMovie(String id) throws IdNotFoundException;
-	public List<Movie> getAllMovieDetails();
+	public Optional<List<Movie>> getAllMovieDetails() throws InvalidIdLengthException, InvalidNameException;
 
 }

@@ -63,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
 			
 			if(result>0) {
 				Login login = new Login();
-				login.setUserName(register.getEmail());
+				login.setUsername(register.getEmail());
 				login.setPassword(encryptedPassword);
 				login.setRegId(register.getId());
 				login.setRole(ROLE.ROLE_USER);
@@ -135,7 +135,6 @@ public class UserRepositoryImpl implements UserRepository {
 		finally {
 			dbUtils.closeConnection(connection);
 		}
-		
 		return Optional.empty();
 	}
 	
@@ -224,7 +223,6 @@ public class UserRepositoryImpl implements UserRepository {
 		finally {
 			dbUtils.closeConnection(connection);
 		}
-		
 		return Optional.empty();
 	}
 

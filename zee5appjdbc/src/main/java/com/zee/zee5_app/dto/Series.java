@@ -17,32 +17,33 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Series implements Comparable<Series> {
 	
-	public Series(String id, String name, String genre, String releaseDate, String trailer, String language,
-			String[] cast, int noOfSeasons, int[] noOfEpisodes)
-					throws InvalidIdLengthException, InvalidNameException {
+	public Series(String id, String name, int ageLimit, String trailer, String cast, String genre, float length,
+			String releaseDate, String language, int noOfEpisodes) throws InvalidIdLengthException, InvalidNameException {
 		super();
 		this.setId(id);
 		this.setName(name);
-		this.genre = genre;
-		this.releaseDate = releaseDate;
+		this.ageLimit = ageLimit;
 		this.trailer = trailer;
-		this.language = language;
 		this.cast = cast;
-		this.noOfSeasons = noOfSeasons;
+		this.genre = genre;
+		this.length = length;
+		this.releaseDate = releaseDate;
+		this.language = language;
 		this.noOfEpisodes = noOfEpisodes;
 	}
-	
+
 	@Setter(value = AccessLevel.NONE)
 	private String id;
 	@Setter(value = AccessLevel.NONE)
 	private String name;
-	private String genre;
-	private String releaseDate;
+	private int ageLimit;
 	private String trailer;
+	private String cast;
+	private String genre;
+	private float length;
+	private String releaseDate;
 	private String language;
-	private String[] cast;
-	private int noOfSeasons;
-	private int[] noOfEpisodes;
+	private int noOfEpisodes;
 	
 	public void setId(String id) throws InvalidIdLengthException {
 		if(id.length()<6) {
@@ -56,27 +57,6 @@ public class Series implements Comparable<Series> {
 			throw new InvalidNameException("name is not valid");
 		this.name = name;
 	}
-	
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(id, name, genre, releaseDate, trailer, language, cast, noOfSeasons, noOfEpisodes);
-//	}
-//	
-//	@Override
-//	public boolean equals(Object obj) {
-//		if(this == obj)
-//			return true;
-//		if(obj == null)
-//			return false;
-//		if(getClass() != obj.getClass())
-//			return false;
-//		Series other = (Series) obj;
-//		return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-//				&& Objects.equals(genre, other.genre) && Objects.equals(releaseDate, other.releaseDate)
-//				&& Objects.equals(trailer, other.trailer) && Objects.equals(language, other.language)
-//				&& Objects.equals(cast, other.cast) && Objects.equals(noOfSeasons, other.noOfSeasons)
-//				&& Objects.equals(noOfEpisodes, other.noOfEpisodes);
-//	}
 	
 	@Override
 	public int compareTo(Series o) {

@@ -73,25 +73,6 @@ public class Register implements Comparable<Register> {
 			throw new InvalidPasswordException("password is not valid");
 		this.password = password;
 	}
-	
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(email, firstName, lastName, id, password);
-//	}
-//	
-//	@Override
-//	public boolean equals(Object obj) {
-//		if(this == obj)
-//			return true;
-//		if(obj == null)
-//			return false;
-//		if(getClass() != obj.getClass())
-//			return false;
-//		Register other = (Register) obj;
-//		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
-//				&& Objects.equals(lastName, other.lastName) && Objects.equals(id, other.id)
-//				&& Objects.equals(password, other.password) && Objects.equals(contactNumber, other.contactNumber);
-//	}
 
 	@Override
 	public int compareTo(Register o) {
