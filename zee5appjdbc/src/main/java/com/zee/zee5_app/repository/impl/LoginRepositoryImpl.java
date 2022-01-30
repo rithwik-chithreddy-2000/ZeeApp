@@ -180,4 +180,46 @@ public class LoginRepositoryImpl implements LoginRepository {
 		}
 	}
 
+	@Override
+	public String updateCredentials(String regId, Login login) {
+		// TODO Auto-generated method stub
+		Connection connection;
+		PreparedStatement preparedStatement;
+		
+		String updateStatement = "UPDATE login"
+				+ " SET username = ?, password = ?, regId = ?, role = ?"
+				+ " WHERE (regId = ?)";
+		connection = dbUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(updateStatement);
+			preparedStatement.setString(1, login.getUsername());
+			preparedStatement.setString(2, login.getPassword());
+			preparedStatement.setString(3, login.getRegId());
+			preparedStatement.setString(4, login.getRole().toString());
+			preparedStatement.setString(5, regId);
+			
+			int result = preparedStatement.executeUpdate();
+			
+			if(result>0) {
+				connection.commit();
+				return "Success";
+			}
+			else {
+				connection.rollback();
+				return "Fail";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return "Fail";
+		}
+	}
+
 }

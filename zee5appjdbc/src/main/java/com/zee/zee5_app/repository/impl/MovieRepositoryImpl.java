@@ -131,7 +131,52 @@ public class MovieRepositoryImpl implements MovieRepository {
 	@Override
 	public String modifyMovie(String id, Movie movie) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		Connection connection;
+		PreparedStatement preparedStatement;
+		
+		String updateStatement = "UPDATE movies"
+				+ " SET movieId = ?, name = ?, ageLimit = ?, cast = ?, genre = ?,"
+				+ " length = ?, trailer = ?, releaseDate = ?, language = ?"
+				+ " WHERE (movieId = ?)";
+		connection = dbUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(updateStatement);
+			preparedStatement.setString(1, movie.getId());
+			preparedStatement.setString(2, movie.getName());
+			preparedStatement.setInt(3, movie.getAgeLimit());
+			preparedStatement.setString(4, movie.getCast());
+			preparedStatement.setString(5, movie.getGenre());
+			preparedStatement.setFloat(6, movie.getLength());
+			preparedStatement.setString(7, movie.getTrailer());
+			preparedStatement.setString(8, movie.getReleaseDate());
+			preparedStatement.setString(9, movie.getLanguage());
+			preparedStatement.setString(10, id);
+			
+			int result = preparedStatement.executeUpdate();
+			
+			if(result>0) {
+				connection.commit();
+				return "Success";
+			}
+			else {
+				connection.rollback();
+				return "Fail";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return "Fail";
+		}
+		finally {
+			dbUtils.closeConnection(connection);
+		}
 	}
 	
 	@Override

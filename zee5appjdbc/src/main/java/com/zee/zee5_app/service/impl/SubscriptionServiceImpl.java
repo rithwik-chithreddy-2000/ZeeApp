@@ -1,10 +1,12 @@
 package com.zee.zee5_app.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import com.zee.zee5_app.dto.Subscription;
 import com.zee.zee5_app.exception.IdNotFoundException;
+import com.zee.zee5_app.exception.InvalidIdLengthException;
 import com.zee.zee5_app.repository.SubscriptionRepository;
 import com.zee.zee5_app.repository.impl.SubscriptionRepositoryImpl;
 import com.zee.zee5_app.service.SubscriptionService;
@@ -12,12 +14,12 @@ import com.zee.zee5_app.service.SubscriptionService;
 public class SubscriptionServiceImpl implements SubscriptionService {
 	
 	private SubscriptionRepository subscriptionRepository = SubscriptionRepositoryImpl.getInstance();
-	private SubscriptionServiceImpl() {
+	private SubscriptionServiceImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}
 	
 	private static SubscriptionService subscriptionService;
-	public static SubscriptionService getInstance() {
+	public static SubscriptionService getInstance() throws IOException {
 		if(subscriptionService==null)
 			subscriptionService = new SubscriptionServiceImpl();
 		return subscriptionService;
@@ -30,13 +32,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public Optional<Subscription> getSubscriptionById(String id) throws IdNotFoundException {
+	public Optional<Subscription> getSubscriptionById(String id) throws IdNotFoundException, InvalidIdLengthException {
 		// TODO Auto-generated method stub
 		return subscriptionRepository.getSubscriptionById(id);
 	}
 
 	@Override
-	public Subscription[] getAllSubscriptions() {
+	public Subscription[] getAllSubscriptions() throws InvalidIdLengthException {
 		// TODO Auto-generated method stub
 		return subscriptionRepository.getAllSubscriptions();
 	}
@@ -54,7 +56,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public List<Subscription> getAllSubscriptionDetails() {
+	public Optional<List<Subscription>> getAllSubscriptionDetails() throws InvalidIdLengthException {
 		// TODO Auto-generated method stub
 		return subscriptionRepository.getAllSubscriptionDetails();
 	}

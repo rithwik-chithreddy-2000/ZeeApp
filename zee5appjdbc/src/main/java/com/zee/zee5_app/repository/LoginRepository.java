@@ -9,5 +9,6 @@ public interface LoginRepository {
 	public String deleteCredentials(String username);
 	public String changePassword(String userName, String password);
 	public String changeRole(String username, ROLE role);
+	public String updateCredentials(String regId, Login login);
 
 }

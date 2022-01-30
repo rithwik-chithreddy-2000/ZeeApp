@@ -62,6 +62,17 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
+//		try {
+//			UserService service = UserServiceImpl.getInstance();
+//			Register register = new Register("reg0006", "Eishika2", "Chithreddy2", "eishika2@gmail.com", "eish2123", null);
+//			register.setContactNumber(new BigDecimal("9321654872"));
+//			String result = service.updateUser("reg0006", register);
+//			System.out.println(result);
+//		} catch (InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException | IOException | IdNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 

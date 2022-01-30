@@ -61,7 +61,7 @@ public class UserRepositoryImpl implements UserRepository {
 			
 			int result = preparedStatement.executeUpdate();
 			
-			if(result>0) {
+			if (result>0) {
 				Login login = new Login();
 				login.setUsername(register.getEmail());
 				login.setPassword(encryptedPassword);
@@ -99,7 +99,60 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public String updateUser(String id, Register register) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		Connection connection;
+		PreparedStatement preparedStatement;
+		
+		String updateStatement = "UPDATE register"
+				+ " SET regId = ?, firstName = ?, lastName = ?, email = ?, contactNumber = ?, password = ?"
+				+ " WHERE (regId = ?)";
+		connection = dbUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(updateStatement);
+			preparedStatement.setString(1, register.getId());
+			preparedStatement.setString(2, register.getFirstName());
+			preparedStatement.setString(3, register.getLastName());
+			preparedStatement.setString(4, register.getEmail());
+			preparedStatement.setBigDecimal(5, register.getContactNumber());
+			String salt = PasswordUtils.getSalt(30);
+			String encryptedPassword = PasswordUtils.generateSecurePassword(register.getPassword(), salt);
+			preparedStatement.setString(6, encryptedPassword);
+			preparedStatement.setString(7, id);
+			
+			int result = preparedStatement.executeUpdate();
+			
+			if (result>0) {
+				Login login = new Login();
+				login.setUsername(register.getEmail());
+				login.setPassword(encryptedPassword);
+				login.setRegId(register.getId());
+				login.setRole(ROLE.ROLE_USER);
+				String res = loginRepository.updateCredentials(register.getId(), login);
+				if(res.equals("Success"))
+					return "Success";
+				else {
+					connection.rollback();
+					return "Fail";
+				}
+			}
+			else {
+				connection.rollback();
+				return "Fail";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return "Fail";
+		}
+		finally {
+			dbUtils.closeConnection(connection);
+		}
 	}
 	
 	@Override
@@ -142,7 +195,7 @@ public class UserRepositoryImpl implements UserRepository {
 	public Register[] getAllUsers() throws InvalidIdLengthException, InvalidNameException, InvalidEmailException, InvalidPasswordException {
 		// TODO Auto-generated method stub
 		Optional<List<Register>> optional = getAllUserDetails();
-		if(optional.isEmpty())
+		if (optional.isEmpty())
 			return null;
 		else {
 			List<Register> list = optional.get();
@@ -165,7 +218,7 @@ public class UserRepositoryImpl implements UserRepository {
 			
 			int result = preparedStatement.executeUpdate();
 			
-			if(result>0) {
+			if (result>0) {
 				connection.commit();
 				return "Success";
 			}

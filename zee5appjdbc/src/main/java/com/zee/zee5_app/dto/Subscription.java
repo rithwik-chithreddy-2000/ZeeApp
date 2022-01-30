@@ -17,7 +17,7 @@ import lombok.ToString;
 public class Subscription implements Comparable<Subscription> {
 	
 	public Subscription(String id, String dateOfPurchase, String expiryDate, float amount, String paymentMode,
-			String status, String type, boolean autoRenewal, String regId) throws InvalidIdLengthException {
+			String status, String type, String autoRenewal, String regId) throws InvalidIdLengthException {
 		super();
 		this.setId(id);
 		this.dateOfPurchase = dateOfPurchase;
@@ -38,7 +38,7 @@ public class Subscription implements Comparable<Subscription> {
 	private String paymentMode;
 	private String status;
 	private String type;
-	private boolean autoRenewal;
+	private String autoRenewal;
 	private String regId;
 	
 	public void setId(String id) throws InvalidIdLengthException {
