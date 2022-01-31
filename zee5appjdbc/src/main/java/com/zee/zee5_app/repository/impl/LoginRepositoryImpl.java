@@ -18,7 +18,7 @@ import com.zee.zee5_app.repository.LoginRepository;
 public class LoginRepositoryImpl implements LoginRepository {
 	
 	@Autowired
-	DataSource dataSource;
+	private DataSource dataSource;
 	public LoginRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}

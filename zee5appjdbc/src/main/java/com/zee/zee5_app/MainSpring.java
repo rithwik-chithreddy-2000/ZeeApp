@@ -2,8 +2,6 @@ package com.zee.zee5_app;
 
 import java.math.BigDecimal;
 
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
@@ -21,10 +19,7 @@ public class MainSpring {
 		// TODO Auto-generated method stub
 		AbstractApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
 		UserRepository userRepository = applicationContext.getBean(UserRepository.class);
-		
-		DataSource dataSource = applicationContext.getBean("dataSource", DataSource.class);
-		System.out.println(dataSource!=null);
-		
+
 		try {
 			Register register = new Register("reg0006", "Eishika", "Chithreddy", "eishika@gmail.com", "eish123", null);
 			register.setContactNumber(new BigDecimal("9321654870"));

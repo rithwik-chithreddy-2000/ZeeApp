@@ -9,31 +9,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.zee.zee5_app.dto.Subscription;
 import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.exception.InvalidIdLengthException;
 import com.zee.zee5_app.repository.SubscriptionRepository;
-import com.zee.zee5_app.utils.DBUtils;
 
 @Repository
 public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 	
-	private DBUtils dbUtils;
+	@Autowired
+	private DataSource dataSource;
 	public SubscriptionRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}
+	
 	@Override
 	public String addSubscription(Subscription subscription) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		
 		String insertStatement = "INSERT INTO subscription"
 				+ " (subId, dateOfPurchase, expiry, amount, paymentMode, status, type, autoRenewal, regId)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
 			preparedStatement.setString(1, subscription.getId());
@@ -68,20 +77,22 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 	
 	@Override
 	public Optional<Subscription> getSubscriptionById(String id) throws IdNotFoundException, InvalidIdLengthException {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		
 		String selectStatement = "SELECT * FROM subscription WHERE subId=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			preparedStatement.setString(1, id);
@@ -104,9 +115,6 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 		return Optional.empty();
 	}
 	
@@ -126,14 +134,19 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 	@Override
 	public String modifySubscription(String id, Subscription subscription) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		
 		String updateStatement = "UPDATE subscription"
 				+ " SET subId = ?, dateOfPurchase = ?, expiry = ?, amount = ?, paymentMode = ?,"
 				+ " status = ?, type = ?, autoRenewal = ?, regId = ?"
 				+ " WHERE (subId = ?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, subscription.getId());
@@ -169,19 +182,21 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 	
 	@Override
 	public String deleteSubscription(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		
 		String deleteStatement = "DELETE FROM subscription WHERE subId=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, id);
@@ -208,21 +223,23 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 	
 	@Override
 	public Optional<List<Subscription>> getAllSubscriptionDetails() throws InvalidIdLengthException {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		ArrayList<Subscription> arrayList = new ArrayList<Subscription>();
 		
 		String selectStatement = "SELECT * FROM subscription";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			
@@ -245,9 +262,6 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}

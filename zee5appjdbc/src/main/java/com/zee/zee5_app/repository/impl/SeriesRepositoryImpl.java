@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.zee.zee5_app.dto.Series;
@@ -16,12 +19,12 @@ import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.exception.InvalidIdLengthException;
 import com.zee.zee5_app.exception.InvalidNameException;
 import com.zee.zee5_app.repository.SeriesRepository;
-import com.zee.zee5_app.utils.DBUtils;
 
 @Repository
 public class SeriesRepositoryImpl implements SeriesRepository {
 	
-	DBUtils dbUtils;
+	@Autowired
+	private DataSource dataSource;
 	public SeriesRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}
@@ -29,13 +32,18 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 	@Override
 	public String addSeries(Series series) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
-//		INSERT INTO `zee5_app`.`series`  VALUES ;
+		
 		String insertStatement = "INSERT INTO series"
 				+ " (seriesId, name, ageLimit, trailer, cast, genre, length, releaseDate, language, noOfEpisodes)"
 				+ " VALUES (?, ?, ?, null, ?, ?, ?, ?, ?, ?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
 			preparedStatement.setString(1, series.getId());
@@ -70,20 +78,22 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 	
 	@Override
 	public Optional<Series> getSeriesById(String id) throws IdNotFoundException, InvalidIdLengthException, InvalidNameException {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		
 		String selectStatement = "SELECT * FROM series WHERE seriesId=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			preparedStatement.setString(1, id);
@@ -106,9 +116,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 		return Optional.empty();
 	}
 	
@@ -128,17 +135,69 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 	@Override
 	public String modifySeries(String id, Series series) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement;
+		
+		String updateStatement = "UPDATE series"
+				+ " SET seriesId = ?, name = ?, ageLimit = ?, cast = ?, genre = ?,"
+				+ " length = ?, releaseDate = ?, language = ?, noOfEpisodes = ?"
+				+ " WHERE (seriesId = ?)";
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			preparedStatement = connection.prepareStatement(updateStatement);
+			preparedStatement.setString(1, series.getId());
+			preparedStatement.setString(2, series.getName());
+			preparedStatement.setInt(3, series.getAgeLimit());
+			preparedStatement.setString(4, series.getCast());
+			preparedStatement.setString(5, series.getGenre());
+			preparedStatement.setFloat(6, series.getLength());
+			preparedStatement.setString(7, series.getReleaseDate());
+			preparedStatement.setString(8, series.getLanguage());
+			preparedStatement.setInt(9, series.getNoOfEpisodes());
+			preparedStatement.setString(10, id);
+			
+			int result = preparedStatement.executeUpdate();
+			
+			if(result>0) {
+				connection.commit();
+				return "Success";
+			}
+			else {
+				connection.rollback();
+				return "Fail";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return "Fail";
+		}
 	}
 	
 	@Override
 	public String deleteSeries(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		
 		String deleteStatement = "DELETE FROM series WHERE seriesId=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, id);
@@ -165,21 +224,23 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 	
 	@Override
 	public Optional<List<Series>> getAllSeriesDetails() throws InvalidIdLengthException, InvalidNameException {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		ArrayList<Series> arrayList = new ArrayList<Series>();
 		
 		String selectStatement = "SELECT * FROM series";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			
@@ -202,9 +263,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}

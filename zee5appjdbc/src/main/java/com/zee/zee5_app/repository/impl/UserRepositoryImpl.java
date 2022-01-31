@@ -30,9 +30,9 @@ import com.zee.zee5_app.utils.PasswordUtils;
 public class UserRepositoryImpl implements UserRepository {
 	
 	@Autowired
-	DataSource dataSource;
+	private DataSource dataSource;
 	@Autowired
-	LoginRepository loginRepository;
+	private LoginRepository loginRepository;
 	public UserRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}

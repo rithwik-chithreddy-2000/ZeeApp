@@ -19,7 +19,6 @@ import com.zee.zee5_app.service.UserService;
 public class UserServiceImpl implements UserService {
 	
 	private UserRepository userRepository;
-	
 	public UserServiceImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}
