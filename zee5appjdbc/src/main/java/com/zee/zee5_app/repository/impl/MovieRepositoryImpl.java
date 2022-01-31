@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5_app.dto.Movie;
 import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.exception.InvalidIdLengthException;
@@ -16,18 +18,12 @@ import com.zee.zee5_app.exception.InvalidNameException;
 import com.zee.zee5_app.repository.MovieRepository;
 import com.zee.zee5_app.utils.DBUtils;
 
+@Repository
 public class MovieRepositoryImpl implements MovieRepository {
 	
-	DBUtils dbUtils = DBUtils.getInstance();
-	private MovieRepositoryImpl() throws IOException {
+	DBUtils dbUtils;
+	public MovieRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
-	}
-	
-	private static MovieRepository movieRepository;
-	public static MovieRepository getInstance() throws IOException {
-		if(movieRepository==null)
-			movieRepository = new MovieRepositoryImpl();
-		return movieRepository;
 	}
 	
 	@Override

@@ -2,25 +2,19 @@ package com.zee.zee5_app.service.impl;
 
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5_app.dto.Login;
 import com.zee.zee5_app.dto.ROLE;
 import com.zee.zee5_app.repository.LoginRepository;
-import com.zee.zee5_app.repository.impl.LoginRepositoryImpl;
 import com.zee.zee5_app.service.LoginService;
 
+@Service
 public class LoginServiceImpl implements LoginService {
 	
-	private LoginRepository loginRepository = LoginRepositoryImpl.getInstance();
-	
-	private LoginServiceImpl() throws IOException {
+	private LoginRepository loginRepository;
+	public LoginServiceImpl() throws IOException {
 		// TODO Auto-generated constructor stub
-	}
-	
-	private static LoginService service;
-	public static LoginService getInstance() throws IOException {
-		if(service==null)
-			service = new LoginServiceImpl();
-		return service;
 	}
 
 	@Override

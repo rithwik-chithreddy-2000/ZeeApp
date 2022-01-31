@@ -5,36 +5,39 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5_app.dto.Login;
 import com.zee.zee5_app.dto.ROLE;
 import com.zee.zee5_app.repository.LoginRepository;
-import com.zee.zee5_app.utils.DBUtils;
 
+@Repository
 public class LoginRepositoryImpl implements LoginRepository {
 	
-	DBUtils dbUtils = DBUtils.getInstance();
-	
-	private LoginRepositoryImpl() throws IOException {
+	@Autowired
+	DataSource dataSource;
+	public LoginRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
-	}
-	
-	private static LoginRepository repository;
-	public static LoginRepository getInstance() throws IOException {
-		if(repository==null)
-			repository = new LoginRepositoryImpl();
-		return repository;
 	}
 
 	@Override
 	public String addCredentials(Login login) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		
 		String insertStatement = "INSERT INTO login"
 				+ " (username, password, regId, role)"
 				+ " VALUES (?, ?, ?, ?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
@@ -70,11 +73,16 @@ public class LoginRepositoryImpl implements LoginRepository {
 	@Override
 	public String deleteCredentials(String username) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		
 		String deleteStatement = "DELETE FROM login WHERE username=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, username);
@@ -101,18 +109,20 @@ public class LoginRepositoryImpl implements LoginRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 
 	@Override
 	public String changePassword(String username, String password) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE login SET password=? WHERE username=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, password);
@@ -138,18 +148,20 @@ public class LoginRepositoryImpl implements LoginRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 
 	@Override
 	public String changeRole(String username, ROLE role) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE login SET role=? WHERE username=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, role.toString());
@@ -175,21 +187,23 @@ public class LoginRepositoryImpl implements LoginRepository {
 			}
 			return "Fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 	}
 
 	@Override
 	public String updateCredentials(String regId, Login login) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		
 		String updateStatement = "UPDATE login"
 				+ " SET username = ?, password = ?, regId = ?, role = ?"
 				+ " WHERE (regId = ?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, login.getUsername());

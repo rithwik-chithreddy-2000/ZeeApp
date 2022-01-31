@@ -4,26 +4,21 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5_app.dto.Episode;
 import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.exception.InvalidIdLengthException;
 import com.zee.zee5_app.exception.InvalidNameException;
 import com.zee.zee5_app.repository.EpisodeRepository;
-import com.zee.zee5_app.repository.impl.EpisodeRepositoryImpl;
 import com.zee.zee5_app.service.EpisodeService;
 
+@Service
 public class EpisodeServiceImpl implements EpisodeService {
 	
-	private EpisodeRepository episodeRepository = EpisodeRepositoryImpl.getInstance();
-	private  EpisodeServiceImpl() throws IOException {
+	private EpisodeRepository episodeRepository;
+	public  EpisodeServiceImpl() throws IOException {
 		// TODO Auto-generated constructor stub
-	}
-	
-	private static EpisodeService episodeService;
-	public static EpisodeService getInstance() throws IOException {
-		if (episodeService==null)
-			episodeService = new EpisodeServiceImpl();
-		return episodeService;
 	}
 
 	@Override

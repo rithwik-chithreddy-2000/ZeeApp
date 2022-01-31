@@ -12,9 +12,7 @@ import com.zee.zee5_app.exception.InvalidEmailException;
 import com.zee.zee5_app.exception.InvalidIdLengthException;
 import com.zee.zee5_app.exception.InvalidNameException;
 import com.zee.zee5_app.exception.InvalidPasswordException;
-import com.zee.zee5_app.service.LoginService;
 import com.zee.zee5_app.service.UserService;
-import com.zee.zee5_app.service.impl.LoginServiceImpl;
 import com.zee.zee5_app.service.impl.UserServiceImpl;
 
 public class Main {

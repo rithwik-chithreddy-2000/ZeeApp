@@ -7,19 +7,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DBUtils {
 	
-	private static DBUtils dbutils;
 	Connection connection = null;
-	private DBUtils() throws IOException {
+	public DBUtils() throws IOException {
 		// TODO Auto-generated constructor stub
 		properties = loadProperties();
-	}
-	
-	public static DBUtils getInstance() throws IOException {
-		if(dbutils==null)
-			dbutils = new DBUtils();
-		return dbutils;
 	}
 	
 	public Connection getConnection() {

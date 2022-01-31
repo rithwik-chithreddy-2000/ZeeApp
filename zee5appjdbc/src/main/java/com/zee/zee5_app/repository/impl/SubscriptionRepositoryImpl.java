@@ -9,26 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5_app.dto.Subscription;
 import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.exception.InvalidIdLengthException;
 import com.zee.zee5_app.repository.SubscriptionRepository;
 import com.zee.zee5_app.utils.DBUtils;
 
+@Repository
 public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 	
-	private DBUtils dbUtils = DBUtils.getInstance();
-	private SubscriptionRepositoryImpl() throws IOException {
+	private DBUtils dbUtils;
+	public SubscriptionRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}
-	
-	private static SubscriptionRepository subscriptionRepository;
-	public static SubscriptionRepository getInstance() throws IOException {
-		if(subscriptionRepository==null)
-			subscriptionRepository = new SubscriptionRepositoryImpl();
-		return subscriptionRepository;
-	}
-	
 	@Override
 	public String addSubscription(Subscription subscription) {
 		// TODO Auto-generated method stub

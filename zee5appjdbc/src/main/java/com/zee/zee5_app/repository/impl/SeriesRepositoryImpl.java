@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5_app.dto.Series;
 import com.zee.zee5_app.exception.IdNotFoundException;
 import com.zee.zee5_app.exception.InvalidIdLengthException;
@@ -16,18 +18,12 @@ import com.zee.zee5_app.exception.InvalidNameException;
 import com.zee.zee5_app.repository.SeriesRepository;
 import com.zee.zee5_app.utils.DBUtils;
 
+@Repository
 public class SeriesRepositoryImpl implements SeriesRepository {
 	
-	DBUtils dbUtils = DBUtils.getInstance();
-	private SeriesRepositoryImpl() throws IOException {
+	DBUtils dbUtils;
+	public SeriesRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
-	}
-	
-	private static SeriesRepository seriesRepository;
-	public static SeriesRepository getInstance() throws IOException {
-		if(seriesRepository==null)
-			seriesRepository = new SeriesRepositoryImpl();
-		return seriesRepository;
 	}
 	
 	@Override
