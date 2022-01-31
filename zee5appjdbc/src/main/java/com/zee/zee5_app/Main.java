@@ -19,16 +19,16 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		try {
-			UserService service = UserServiceImpl.getInstance();
-			Register register = new Register("reg0006", "Eishika", "Chithreddy", "eishika@gmail.com", "eish123", null);
-			register.setContactNumber(new BigDecimal("9321654870"));
-			String result = service.addUser(register);
-			System.out.println(result);
-		} catch (InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			UserService service = UserServiceImpl.getInstance();
+//			Register register = new Register("reg0006", "Eishika", "Chithreddy", "eishika@gmail.com", "eish123", null);
+//			register.setContactNumber(new BigDecimal("9321654870"));
+//			String result = service.addUser(register);
+//			System.out.println(result);
+//		} catch (InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 //		try {
 //			UserService service = UserServiceImpl.getInstance();
