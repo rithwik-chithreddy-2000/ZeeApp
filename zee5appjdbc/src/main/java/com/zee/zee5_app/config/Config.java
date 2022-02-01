@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
+
+import com.zee.zee5_app.utils.PasswordUtils;
 
 @Configuration
 @ComponentScan("com.zee.zee5_app")
@@ -19,22 +22,21 @@ public class Config {
 	Environment environment;
 	
 	@Bean
+	@Scope("singleton")
 	public DataSource dataSource() {
 		BasicDataSource basicDataSource = new BasicDataSource();
 		
 		basicDataSource.setUsername(environment.getProperty("jdbc.username"));
 		basicDataSource.setPassword(environment.getProperty("jdbc.password"));
 		basicDataSource.setUrl(environment.getProperty("jdbc.url"));
-		basicDataSource.setInitialSize(5);
-//		try {
-//			basicDataSource.getConnection().setAutoCommit(false);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		basicDataSource.setDefaultAutoCommit(false);
 		
 		return basicDataSource;
+	}
+	
+	@Bean
+	public PasswordUtils passwordUtils() {
+		return new PasswordUtils();
 	}
 
 }

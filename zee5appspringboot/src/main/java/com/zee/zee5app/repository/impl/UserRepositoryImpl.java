@@ -1,4 +1,4 @@
-package com.zee.zee5_app.repository.impl;
+package com.zee.zee5app.repository.impl;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,17 +14,17 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.zee.zee5_app.dto.Login;
-import com.zee.zee5_app.dto.ROLE;
-import com.zee.zee5_app.dto.Register;
-import com.zee.zee5_app.exception.IdNotFoundException;
-import com.zee.zee5_app.exception.InvalidEmailException;
-import com.zee.zee5_app.exception.InvalidIdLengthException;
-import com.zee.zee5_app.exception.InvalidNameException;
-import com.zee.zee5_app.exception.InvalidPasswordException;
-import com.zee.zee5_app.repository.LoginRepository;
-import com.zee.zee5_app.repository.UserRepository;
-import com.zee.zee5_app.utils.PasswordUtils;
+import com.zee.zee5app.dto.Login;
+import com.zee.zee5app.dto.ROLE;
+import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.exception.InvalidEmailException;
+import com.zee.zee5app.exception.InvalidIdLengthException;
+import com.zee.zee5app.exception.InvalidNameException;
+import com.zee.zee5app.exception.InvalidPasswordException;
+import com.zee.zee5app.repository.LoginRepository;
+import com.zee.zee5app.repository.UserRepository;
+import com.zee.zee5app.utils.PasswordUtils;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -68,17 +68,14 @@ public class UserRepositoryImpl implements UserRepository {
 			int result = preparedStatement.executeUpdate();
 			
 			if (result>0) {
-				connection.commit();
 				Login login = new Login();
 				login.setUsername(register.getEmail());
 				login.setPassword(encryptedPassword);
 				login.setRegId(register.getId());
 				login.setRole(ROLE.ROLE_USER);
 				String res = loginRepository.addCredentials(login);
-				if(res.equals("Success")) {
-//					connection.commit();
+				if(res.equals("Success"))
 					return "Success";
-				}
 				else {
 					connection.rollback();
 					return "Fail";
@@ -233,10 +230,8 @@ public class UserRepositoryImpl implements UserRepository {
 			
 			int result = preparedStatement.executeUpdate();
 			
-			if (result>0) {
-				connection.commit();
+			if (result>0)
 				return "Success";
-			}
 			else {
 				connection.rollback();
 				return "Fail";

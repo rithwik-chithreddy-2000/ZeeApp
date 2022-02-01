@@ -1,4 +1,4 @@
-package com.zee.zee5_app.utils;
+package com.zee.zee5app.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

@@ -1,4 +1,4 @@
-package com.zee.zee5_app.repository.impl;
+package com.zee.zee5app.repository.impl;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,9 +10,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.zee.zee5_app.dto.Login;
-import com.zee.zee5_app.dto.ROLE;
-import com.zee.zee5_app.repository.LoginRepository;
+import com.zee.zee5app.dto.Login;
+import com.zee.zee5app.dto.ROLE;
+import com.zee.zee5app.repository.LoginRepository;
 
 @Repository
 public class LoginRepositoryImpl implements LoginRepository {
@@ -48,10 +48,8 @@ public class LoginRepositoryImpl implements LoginRepository {
 			
 			int result = preparedStatement.executeUpdate();
 			
-			if(result>0) {
-				connection.commit();
+			if(result>0)
 				return "Success";
-			}
 			else {
 				connection.rollback();
 				return "Fail";
@@ -90,10 +88,8 @@ public class LoginRepositoryImpl implements LoginRepository {
 			
 			int result = preparedStatement.executeUpdate();
 			
-			if(result>0) {
-				connection.commit();
+			if(result>0)
 				return "Success";
-			}
 			else {
 				connection.rollback();
 				return "Fail";
@@ -130,10 +126,8 @@ public class LoginRepositoryImpl implements LoginRepository {
 			preparedStatement.setString(2, username);
 			
 			int result = preparedStatement.executeUpdate();
-			if(result>0) {
-				connection.commit();
+			if(result>0)
 				return "Success";
-			}
 			else {
 				connection.rollback();
 				return "Fail";
@@ -169,10 +163,8 @@ public class LoginRepositoryImpl implements LoginRepository {
 			preparedStatement.setString(2, username);
 			
 			int result = preparedStatement.executeUpdate();
-			if(result>0) {
-				connection.commit();
+			if(result>0)
 				return "Success";
-			}
 			else {
 				connection.rollback();
 				return "Fail";
@@ -215,10 +207,8 @@ public class LoginRepositoryImpl implements LoginRepository {
 			
 			int result = preparedStatement.executeUpdate();
 			
-			if(result>0) {
-				connection.commit();
+			if(result>0)
 				return "Success";
-			}
 			else {
 				connection.rollback();
 				return "Fail";
