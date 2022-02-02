@@ -1,61 +1,62 @@
 package com.zee.zee5app.service.impl;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Episode;
 import com.zee.zee5app.exception.IdNotFoundException;
-import com.zee.zee5app.exception.InvalidIdLengthException;
-import com.zee.zee5app.exception.InvalidNameException;
 import com.zee.zee5app.repository.EpisodeRepository;
 import com.zee.zee5app.service.EpisodeService;
 
 @Service
 public class EpisodeServiceImpl implements EpisodeService {
 	
+	@Autowired
 	private EpisodeRepository episodeRepository;
-	public  EpisodeServiceImpl() throws IOException {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	public String addEpisode(Episode episode) {
 		// TODO Auto-generated method stub
-		return episodeRepository.addEpisode(episode);
+		Episode episode2 = episodeRepository.save(episode);
+		if (episode2!=null)
+			return "Success";
+		else
+			return "Fail";
 	}
 
 	@Override
-	public Optional<Episode> getEpisodeById(String id)
-			throws IdNotFoundException, InvalidIdLengthException, InvalidNameException {
+	public Optional<Episode> getEpisodeById(String id) {
 		// TODO Auto-generated method stub
-		return episodeRepository.getEpisodeById(id);
+		return episodeRepository.findById(id);
 	}
 
 	@Override
-	public Episode[] getAllEpisode() throws InvalidIdLengthException, InvalidNameException {
+	public Episode[] getAllEpisode() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String modifyEpisode(String id, Episode episode) throws IdNotFoundException {
-		// TODO Auto-generated method stub
-		return episodeRepository.modifyEpisode(id, episode);
+		List<Episode> list = episodeRepository.findAll();
+		Episode[] episodes = new Episode[list.size()];
+		return list.toArray(episodes);
 	}
 
 	@Override
 	public String deleteEpisode(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return episodeRepository.deleteEpisode(id);
+		Optional<Episode> optional = this.getEpisodeById(id);
+		if (optional.isEmpty())
+			throw new IdNotFoundException("Record not found");
+		else {
+			episodeRepository.deleteById(id);
+			return "Success";
+		}
 	}
 
 	@Override
-	public Optional<List<Episode>> getAllEpisodeDetails() throws InvalidIdLengthException, InvalidNameException {
+	public Optional<List<Episode>> getAllEpisodeDetails() {
 		// TODO Auto-generated method stub
-		return episodeRepository.getAllEpisodeDetails();
+		return Optional.ofNullable(episodeRepository.findAll());
 	}
 
 }

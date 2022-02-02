@@ -1,8 +1,13 @@
 package com.zee.zee5app.dto;
 
-import com.zee.zee5app.exception.InvalidIdLengthException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,38 +19,44 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "subscription")
 public class Subscription implements Comparable<Subscription> {
 	
-	public Subscription(String id, String dateOfPurchase, String expiryDate, float amount, String paymentMode,
-			String status, String type, String autoRenewal, String regId) throws InvalidIdLengthException {
-		super();
-		this.setId(id);
-		this.dateOfPurchase = dateOfPurchase;
-		this.expiryDate = expiryDate;
-		this.amount = amount;
-		this.paymentMode = paymentMode;
-		this.status = status;
-		this.type = type;
-		this.autoRenewal = autoRenewal;
-		this.regId = regId;
-	}
-
-	@Setter(value = AccessLevel.NONE)
-	private String id;
-	private String dateOfPurchase;
-	private String expiryDate;
-	private float amount;
-	private String paymentMode;
-	private String status;
-	private String type;
-	private String autoRenewal;
-	private String regId;
+//	public Subscription(String id, String dateOfPurchase, String expiryDate, float amount, String paymentMode,
+//			String status, String type, String autoRenewal, String regId) throws InvalidIdLengthException {
+//		super();
+//		this.setId(id);
+//		this.dateOfPurchase = dateOfPurchase;
+//		this.expiryDate = expiryDate;
+//		this.amount = amount;
+//		this.paymentMode = paymentMode;
+//		this.status = status;
+//		this.type = type;
+//		this.autoRenewal = autoRenewal;
+//		this.regId = regId;
+//	}
 	
-	public void setId(String id) throws InvalidIdLengthException {
-		if(id.length()<6)
-			throw new InvalidIdLengthException("id length is less than 6");
-		this.id = id;
-	}
+	@Id
+	@Column(name = "subId")
+	private String id;
+	@NotNull
+	private String dateOfPurchase;
+	@NotNull
+	private String expiryDate;
+	@NotNull
+	private float amount;
+	@NotBlank
+	private String paymentMode;
+	@NotBlank
+	private String status;
+	@NotBlank
+	private String type;
+	@NotBlank
+	private String autoRenewal;
+	@NotBlank
+	private String regId;
 	
 	@Override
 	public int compareTo(Subscription o) {

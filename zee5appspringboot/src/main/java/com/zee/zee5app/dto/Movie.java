@@ -1,9 +1,15 @@
 package com.zee.zee5app.dto;
 
-import com.zee.zee5app.exception.InvalidIdLengthException;
-import com.zee.zee5app.exception.InvalidNameException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,45 +21,44 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "movie", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class Movie implements Comparable<Movie>{
 	
-	public Movie(String id, String name, int ageLimit, String cast, String genre, float length, String trailer,
-			String releaseDate, String language) throws InvalidIdLengthException, InvalidNameException {
-		super();
-		this.setId(id);
-		this.setName(name);
-		this.ageLimit = ageLimit;
-		this.cast = cast;
-		this.genre = genre;
-		this.length = length;
-		this.trailer = trailer;
-		this.releaseDate = releaseDate;
-		this.language = language;
-	}
-
-	@Setter(value = AccessLevel.NONE)
+//	public Movie(String id, String name, int ageLimit, String cast, String genre, float length, String trailer,
+//			String releaseDate, String language) throws InvalidIdLengthException, InvalidNameException {
+//		super();
+//		this.setId(id);
+//		this.setName(name);
+//		this.ageLimit = ageLimit;
+//		this.cast = cast;
+//		this.genre = genre;
+//		this.length = length;
+//		this.trailer = trailer;
+//		this.releaseDate = releaseDate;
+//		this.language = language;
+//	}
+	
+	@Id
+	@Column(name = "movId")
 	private String id;
-	@Setter(value = AccessLevel.NONE)
+	@NotBlank
 	private String name;
+	@Max(value = 70)
 	private int ageLimit;
+	@NotBlank
 	private String cast;
+	@NotBlank
 	private String genre;
+	@NotNull
 	private float length;
+	@NotBlank
 	private String trailer;
+	@NotBlank
 	private String releaseDate;
+	@NotBlank
 	private String language;
-	
-	public void setId(String id) throws InvalidIdLengthException {
-		if(id.length()<6)
-			throw new InvalidIdLengthException("id length is less than 6");
-		this.id = id;
-	}
-	
-	public void setName(String name) throws InvalidNameException {
-		if(name==null || name=="" || name.length()<2)
-			throw new InvalidNameException("name is not valid");
-		this.name = name;
-	}
 	
 	@Override
 	public int compareTo(Movie o) {
