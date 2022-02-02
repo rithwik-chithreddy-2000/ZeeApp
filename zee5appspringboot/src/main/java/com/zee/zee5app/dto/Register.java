@@ -1,7 +1,5 @@
 package com.zee.zee5app.dto;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -58,8 +56,9 @@ public class Register implements Comparable<Register> {
 	@NotBlank
 	private String password;
 	
+	@Size(min = 10, max = 10)
 	@NotBlank
-	private BigDecimal contactNumber;
+	private String contactNumber;
 
 	@Override
 	public int compareTo(Register o) {

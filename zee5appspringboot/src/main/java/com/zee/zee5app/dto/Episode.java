@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,9 +37,13 @@ public class Episode implements Comparable<Episode> {
 	@Id
 	@Column(name = "epiId")
 	private String id;
+	@NotBlank
 	private String serId;
+	@NotBlank
 	private String name;
+	@NotNull
 	private float length;
+	@NotBlank
 	private String location;
 	private String trailer;
 	

@@ -49,7 +49,6 @@ public class Series implements Comparable<Series> {
 	private String name;
 	@Max(value = 70)
 	private int ageLimit;
-	@NotBlank
 	private String trailer;
 	@NotBlank
 	private String cast;
