@@ -4,10 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import com.zee.zee5app.dto.Register;
-import com.zee.zee5app.exception.IdNotFoundException;
-import com.zee.zee5app.service.UserService;
-
 @SpringBootApplication
 public class Zee5appspringbootApplication {
 
@@ -15,36 +11,37 @@ public class Zee5appspringbootApplication {
 		ConfigurableApplicationContext applicationContext =
 				SpringApplication.run(Zee5appspringbootApplication.class, args);
 		
-		UserService userService = applicationContext.getBean(UserService.class);
-		System.out.println("Add User");
-		for (int i = 1; i <= 5; i++) {
-			Register register = new Register("reg000"+i, "Rithwik"+i, "Chithreddy"+i, "rithwik"+i+"@gmail.com", "rith123"+i, "932165487"+i);
-			System.out.println(userService.addUser(register) + " " + i);
-		}
-		System.out.println();
+//		RoleRepository roleRepository = applicationContext.getBean(RoleRepository.class);
+//		UserService userService = applicationContext.getBean(UserService.class);
+//		
+//		Register register = new Register("reg0006", "Rithwik6", "Chithreddy6", "rithwik6@gmail.com", "rith1236", new BigInteger("9321654876"), null);
+//		Set<Role> roles = new HashSet<Role>();
+//		roles.add(roleRepository.findById(1).get());
+//		roles.add(roleRepository.findById(2).get());
+//		register.setRoles(roles);
+//		System.out.println(userService.addUser(register));
+//		System.out.println();
 		
-		System.out.println("Get User by Id");
-		System.out.println(userService.getUserById("reg0004").get());
-		System.out.println();
+//		SeriesService seriesService = applicationContext.getBean(SeriesService.class);
+//		Series series = new Series("ser0001", "SeriesName1", 6, null, "Cast1", "Genre1", "2022-04-01", "Language1", 19, null);
+//		Series series2 = new Series("ser0002", "SeriesName2", 7, null, "Cast2", "Genre2", "2022-04-02", "Language2", 20, null);
+//		System.out.println(seriesService.addSeries(series));
+//		System.out.println(seriesService.addSeries(series2));
+//		Episode episode = new Episode("epi0001", "EpisodeName1", 20, "Link1", null, series);
+//		EpisodeService episodeService = applicationContext.getBean(EpisodeService.class);
+//		System.out.println(episodeService.addEpisode(episode));
 		
-		System.out.println("Get All User Details - List");
-		userService.getAllUserDetails().get().forEach(e->System.out.println(e));
-		System.out.println();
-		
-		System.out.println("Delete Record by Id");
-		try {
-			System.out.println(userService.deleteUserById("reg0003"));
-		} catch (IdNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		System.out.println();
-		
-		System.out.println("Get All User Details - Array");
-		for (Register register : userService.getAllUsers()) {
-			System.out.println(register);
-		}
-		System.out.println();
+//		SubscriptionService subscriptionService = applicationContext.getBean(SubscriptionService.class);
+//		Subscription subscription = new Subscription("sub0001", "2022-03-01", "2023-03-01", 2001, "credit1", "yearly1", "active1", "true1", null);
+//		Register register = new Register();
+//		register.setId("reg0001");
+//		subscription.setRegister(register);
+//		System.out.println(subscriptionService.addSubscription(subscription));
+//		Subscription subscription2 = new Subscription("sub0002", "2022-03-02", "2023-03-02", 2002, "credit2", "yearly2", "active2", "true2", null);
+//		Register register2 = new Register();
+//		register.setId("reg0001");
+//		subscription.setRegister(register2);
+//		System.out.println(subscriptionService.addSubscription(subscription2));
 		
 		applicationContext.close();
 	}

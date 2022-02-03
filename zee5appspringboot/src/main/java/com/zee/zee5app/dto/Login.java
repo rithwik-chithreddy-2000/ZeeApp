@@ -5,7 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -39,8 +38,6 @@ public class Login implements Comparable<Login> {
 	private String password;
 	@NotBlank
 	private String regId;
-	@NotNull
-	private ROLE role;
 	
 	@Override
 	public int compareTo(Login o) {

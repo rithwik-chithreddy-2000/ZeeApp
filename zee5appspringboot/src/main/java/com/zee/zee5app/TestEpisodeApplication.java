@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.Episode;
+import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.EpisodeService;
 
@@ -18,7 +19,10 @@ public class TestEpisodeApplication {
 		EpisodeService episodeService = applicationContext.getBean(EpisodeService.class);
 		System.out.println("Add Episode");
 		for (int i = 1; i <= 5; i++) {
-			Episode episode = new Episode("epi000"+i, "ser000"+i, "EpisodeName"+i, 20+i, "Link"+i, null);
+			Episode episode = new Episode("epi000"+i, "EpisodeName"+i, 20+i, "Link"+i, null, null);
+			Series series = new Series();
+			series.setId("ser000"+i);
+			episode.setSeries(series);
 			System.out.println(episodeService.addEpisode(episode) + " " + i);
 		}
 		System.out.println();

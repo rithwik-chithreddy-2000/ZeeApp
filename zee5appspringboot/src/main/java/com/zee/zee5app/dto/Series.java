@@ -1,8 +1,13 @@
 package com.zee.zee5app.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -60,6 +65,9 @@ public class Series implements Comparable<Series> {
 	private String language;
 	@Min(value = 1)
 	private int noOfEpisodes;
+	
+	@OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
+	private List<Episode> episodes = new ArrayList<Episode>();
 	
 	@Override
 	public int compareTo(Series o) {

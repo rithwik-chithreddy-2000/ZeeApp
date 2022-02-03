@@ -6,9 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.repository.LoginRepository;
 import com.zee.zee5app.repository.UserRepository;
+import com.zee.zee5app.service.LoginService;
 import com.zee.zee5app.service.UserService;
 
 @Service
@@ -16,13 +20,30 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private LoginService loginService;
+	@Autowired
+	private LoginRepository loginRepository;
 	
 	@Override
-	public String addUser(Register register) {
+	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
+	public String addUser(Register register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
+		if(userRepository.existsByEmailAndContactNumber(register.getEmail(), register.getContactNumber())) {
+			throw new AlreadyExistsException("This record already exists");
+		}
 		Register register2 = userRepository.save(register);
-		if (register2!=null)
-			return "Success";
+		if (register2!=null) {
+			Login login = new Login(register2.getEmail(), register2.getPassword(), register2.getId());
+			if (loginRepository.existsByUsername(login.getUsername())) {
+				throw new AlreadyExistsException("This record already exists");
+			}
+			String result = loginService.addCredentials(login);
+			if (result.equals("Success"))
+				return "Success";
+			else
+				return "Fail";
+		}
 		else
 			return "Fail";
 	}
