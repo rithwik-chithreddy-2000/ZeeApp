@@ -16,9 +16,26 @@ public class TestSeriesApplication {
 				SpringApplication.run(TestSeriesApplication.class, args);
 		
 		SeriesService seriesService = applicationContext.getBean(SeriesService.class);
+//		FileUtils fileUtils = applicationContext.getBean(FileUtils.class);
+//		String des = "C:\\Users\\rithwik.chithreddy\\Downloads\\seriesStore";
 		System.out.println("Add Series");
 		for (int i = 1; i <= 5; i++) {
 			Series series = new Series("ser000"+i, "SeriesName"+i, 5+i, null, "Cast"+i, "Genre"+i, "2022-04-0"+i, "Language"+i, 18+i, null);
+//			series.setTrailer(des);
+//			String src = "C:\\Users\\rithwik.chithreddy\\Downloads\\pushpa trailer.mp4";
+//			
+//			String result = seriesService.addSeries(series);
+//			if (result.equals("Success")) {
+//				File file = new File(src);
+//				byte[] data = null;
+//				try {
+//					data = fileUtils.readFile(file);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				fileUtils.writeFile(data, des + file.getName());
+//			}
 			System.out.println(seriesService.addSeries(series) + " " + i);
 		}
 		System.out.println();

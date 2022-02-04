@@ -16,9 +16,26 @@ public class TestMovieApplication {
 				SpringApplication.run(TestMovieApplication.class, args);
 		
 		MovieService movieService = applicationContext.getBean(MovieService.class);
+//		FileUtils fileUtils = applicationContext.getBean(FileUtils.class);
+//		String des = "C:\\Users\\rithwik.chithreddy\\Downloads\\movieStore";
 		System.out.println("Add Movie");
 		for (int i = 1; i <= 5; i++) {
-			Movie movie = new Movie("mov000"+i, "MovieName"+i, 5+i, "Cast"+i, "Genre"+i, 120+i, "Link"+i, "2022-04-0"+i, "Language"+i);
+			Movie movie = new Movie("mov000"+i, "MovieName"+i, 5+i, "Cast"+i, "Genre"+i, 120+i, null, "2022-04-0"+i, "Language"+i);
+//			movie.setTrailer(des);
+//			String src = "C:\\Users\\rithwik.chithreddy\\Downloads\\pushpa trailer.mp4";
+//			
+//			String result = movieService.addMovie(movie);
+//			if (result.equals("Success")) {
+//				File file = new File(src);
+//				byte[] data = null;
+//				try {
+//					data = fileUtils.readFile(file);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				fileUtils.writeFile(data, des + file.getName());
+//			}
 			System.out.println(movieService.addMovie(movie) + " " + i);
 		}
 		System.out.println();

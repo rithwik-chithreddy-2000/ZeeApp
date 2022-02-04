@@ -17,12 +17,29 @@ public class TestEpisodeApplication {
 				SpringApplication.run(TestEpisodeApplication.class, args);
 		
 		EpisodeService episodeService = applicationContext.getBean(EpisodeService.class);
+//		FileUtils fileUtils = applicationContext.getBean(FileUtils.class);
+//		String des = "C:\\Users\\rithwik.chithreddy\\Downloads\\episodeStore";
 		System.out.println("Add Episode");
 		for (int i = 1; i <= 5; i++) {
 			Episode episode = new Episode("epi000"+i, "EpisodeName"+i, 20+i, "Link"+i, null, null);
 			Series series = new Series();
 			series.setId("ser000"+i);
 			episode.setSeries(series);
+//			episode.setTrailer(des);
+//			String src = "C:\\Users\\rithwik.chithreddy\\Downloads\\pushpa trailer.mp4";
+//			
+//			String result = episodeService.addEpisode(episode);
+//			if (result.equals("Success")) {
+//				File file = new File(src);
+//				byte[] data = null;
+//				try {
+//					data = fileUtils.readFile(file);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				fileUtils.writeFile(data, des + file.getName());
+//			}
 			System.out.println(episodeService.addEpisode(episode) + " " + i);
 		}
 		System.out.println();

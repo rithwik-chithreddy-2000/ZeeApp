@@ -53,7 +53,8 @@ public class Movie implements Comparable<Movie>{
 	private String genre;
 	@NotNull
 	private float length;
-	@NotBlank
+//	@Lob
+//	private byte[] trailer;
 	private String trailer;
 	@NotBlank
 	private String releaseDate;
