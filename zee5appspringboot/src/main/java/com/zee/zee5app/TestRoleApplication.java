@@ -8,7 +8,7 @@ import com.zee.zee5app.dto.EROLE;
 import com.zee.zee5app.dto.Role;
 import com.zee.zee5app.service.RoleService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestRoleApplication {
 
 	public static void main(String[] args) {

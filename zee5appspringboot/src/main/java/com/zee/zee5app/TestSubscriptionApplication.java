@@ -8,7 +8,7 @@ import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.service.SubscriptionService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestSubscriptionApplication {
 
 	public static void main(String[] args) {

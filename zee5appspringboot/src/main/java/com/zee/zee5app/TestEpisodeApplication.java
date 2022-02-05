@@ -9,7 +9,7 @@ import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.EpisodeService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestEpisodeApplication {
 
 	public static void main(String[] args) {

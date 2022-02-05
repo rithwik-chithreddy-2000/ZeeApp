@@ -8,7 +8,7 @@ import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.SeriesService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestSeriesApplication {
 
 	public static void main(String[] args) {

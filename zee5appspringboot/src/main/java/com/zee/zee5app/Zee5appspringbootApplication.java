@@ -1,15 +1,8 @@
 package com.zee.zee5app;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-
-import com.zee.zee5app.dto.Movie;
-import com.zee.zee5app.service.MovieService;
-import com.zee.zee5app.utils.FileUtils;
 
 @SpringBootApplication
 public class Zee5appspringbootApplication {
@@ -50,28 +43,28 @@ public class Zee5appspringbootApplication {
 //		subscription.setRegister(register2);
 //		System.out.println(subscriptionService.addSubscription(subscription2));
 		
-		MovieService movieService = applicationContext.getBean(MovieService.class);
-		FileUtils fileUtils = applicationContext.getBean(FileUtils.class);
-		String src = "C:\\Users\\rithwik.chithreddy\\Downloads\\pushpa trailer.mp4";
-		String des = "C:\\Users\\rithwik.chithreddy\\Downloads\\movieStore";
+//		MovieService movieService = applicationContext.getBean(MovieService.class);
+//		FileUtils fileUtils = applicationContext.getBean(FileUtils.class);
+//		String src = "C:\\Users\\rithwik.chithreddy\\Downloads\\pushpa trailer.mp4";
+//		String des = "C:\\Users\\rithwik.chithreddy\\Downloads\\movieStore\\";
+//		
+//		Movie movie = new Movie("mov0001", "Pushpa", 18, "Allu Arjun", "Action", 250, null, "2022-12-15", "Hindi");
+//		movie.setTrailer(des);
+//		
+//		String result = movieService.addMovie(movie);
+//		if (result.equals("Success")) {
+//			File file = new File(src);
+//			byte[] data = null;
+//			try {
+//				data = fileUtils.readFile(file);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			fileUtils.writeFile(data, des + file.getName());
+//		}
 		
-		Movie movie = new Movie("mov0001", "Pushpa", 18, "Allu Arjun", "Action", 250, null, "2022-12-15", "Hindi");
-		movie.setTrailer(des);
-		
-		String result = movieService.addMovie(movie);
-		if (result.equals("Success")) {
-			File file = new File(src);
-			byte[] data = null;
-			try {
-				data = fileUtils.readFile(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			fileUtils.writeFile(data, des + file.getName());
-		}
-		
-		applicationContext.close();
+//		applicationContext.close();
 	}
 
 }

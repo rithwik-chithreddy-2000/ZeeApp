@@ -14,7 +14,7 @@ import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.repository.RoleRepository;
 import com.zee.zee5app.service.UserService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestUserApplication {
 
 	public static void main(String[] args) throws AlreadyExistsException {

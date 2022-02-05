@@ -8,7 +8,7 @@ import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.LoginService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestLoginApplication {
 
 	public static void main(String[] args) {

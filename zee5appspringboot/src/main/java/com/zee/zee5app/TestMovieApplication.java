@@ -8,7 +8,7 @@ import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.MovieService;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestMovieApplication {
 
 	public static void main(String[] args) {
