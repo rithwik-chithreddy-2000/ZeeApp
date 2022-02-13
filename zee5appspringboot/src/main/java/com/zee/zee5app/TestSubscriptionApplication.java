@@ -4,14 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.dto.Subscription;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.service.SubscriptionService;
 
 //@SpringBootApplication
 public class TestSubscriptionApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AlreadyExistsException {
 		ConfigurableApplicationContext applicationContext =
 				SpringApplication.run(TestSubscriptionApplication.class, args);
 		
@@ -19,9 +20,8 @@ public class TestSubscriptionApplication {
 		System.out.println("Add Subscription");
 		for (int i = 1; i <= 5; i++) {
 			Subscription subscription = new Subscription("sub000"+i, "2022-03-0"+i, "2023-03-0"+i, 2000+i, "credit"+i, "yearly"+i, "active"+i, "true"+i, null);
-			Register register = new Register();
-			register.setId("reg000"+i);
-			subscription.setRegister(register);
+			User user = new User();
+			subscription.setUser(user);
 			System.out.println(subscriptionService.addSubscription(subscription) + " " + i);
 		}
 		System.out.println();

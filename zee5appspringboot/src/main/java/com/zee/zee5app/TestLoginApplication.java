@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.Login;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.LoginService;
 
@@ -18,7 +19,9 @@ public class TestLoginApplication {
 		LoginService loginService = applicationContext.getBean(LoginService.class);
 		System.out.println("Add Login");
 		for (int i = 1; i <= 5; i++) {
-			Login login = new Login("rithwik"+i+"@gmail.com", "rith123"+i, "reg000"+i);
+			Login login = new Login("rithwik"+i+"@gmail.com", "rith123"+i, null);
+			User user = new User();
+			login.setUser(user);
 			System.out.println(loginService.addCredentials(login) + " " + i);
 		}
 		System.out.println();

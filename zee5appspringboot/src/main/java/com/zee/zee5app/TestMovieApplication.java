@@ -5,13 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.Movie;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.MovieService;
 
 //@SpringBootApplication
 public class TestMovieApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AlreadyExistsException, IdNotFoundException {
 		ConfigurableApplicationContext applicationContext =
 				SpringApplication.run(TestMovieApplication.class, args);
 		

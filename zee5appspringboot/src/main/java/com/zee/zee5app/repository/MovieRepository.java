@@ -15,5 +15,6 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
 	Optional<Movie> findByNameAndLanguage(String name, String language);
 	Optional<Movie> findByNameAndReleaseDate(String name, String releaseDate);
 	Optional<List<Movie>> findAllByCast(String cast);
+	Boolean existsByName(String name);
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Series;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.repository.SeriesRepository;
 import com.zee.zee5app.service.SeriesService;
@@ -18,19 +19,23 @@ public class SeriesServiceImpl implements SeriesService {
 	private SeriesRepository seriesRepository;
 
 	@Override
-	public String addSeries(Series series) {
+	public Series addSeries(Series series) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
+		if(seriesRepository.existsById(series.getId())) {
+			throw new AlreadyExistsException("This record already exists");
+		}
 		Series series2 = seriesRepository.save(series);
-		if (series2!=null)
-			return "Success";
-		else
-			return "Fail";
+		return series2;
 	}
 
 	@Override
-	public Optional<Series> getSeriesById(String id) {
+	public Optional<Series> getSeriesById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return seriesRepository.findById(id);
+		Optional<Series> optional = seriesRepository.findById(id);
+		if (optional.isEmpty()) {
+			throw new IdNotFoundException("Id does not exist");
+		}
+		return optional;
 	}
 
 	@Override

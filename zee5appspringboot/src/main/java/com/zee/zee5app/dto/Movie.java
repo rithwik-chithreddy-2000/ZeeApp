@@ -24,21 +24,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Table(name = "movie", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
-public class Movie implements Comparable<Movie>{
-	
-//	public Movie(String id, String name, int ageLimit, String cast, String genre, float length, String trailer,
-//			String releaseDate, String language) throws InvalidIdLengthException, InvalidNameException {
-//		super();
-//		this.setId(id);
-//		this.setName(name);
-//		this.ageLimit = ageLimit;
-//		this.cast = cast;
-//		this.genre = genre;
-//		this.length = length;
-//		this.trailer = trailer;
-//		this.releaseDate = releaseDate;
-//		this.language = language;
-//	}
+public class Movie implements Comparable<Movie> {
 	
 	@Id
 	@Column(name = "movId")

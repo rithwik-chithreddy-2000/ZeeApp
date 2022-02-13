@@ -1,10 +1,15 @@
 package com.zee.zee5app.dto;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,21 +28,16 @@ import lombok.ToString;
 @Table(name = "login")
 public class Login implements Comparable<Login> {
 	
-//	public Login(String username, String password, String regId, ROLE role) {
-//		super();
-//		this.username = username;
-//		this.password = password;
-//		this.regId = regId;
-//		this.role = role;
-//	}
-	
 	@Id
 	@Email
 	private String username;
 	@NotBlank
 	private String password;
-	@NotBlank
-	private String regId;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@JoinColumn(name = "userId")
+	private User user;
 	
 	@Override
 	public int compareTo(Login o) {

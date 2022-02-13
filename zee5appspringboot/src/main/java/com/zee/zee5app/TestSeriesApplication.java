@@ -5,13 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.Series;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.SeriesService;
 
 //@SpringBootApplication
 public class TestSeriesApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IdNotFoundException, AlreadyExistsException {
 		ConfigurableApplicationContext applicationContext =
 				SpringApplication.run(TestSeriesApplication.class, args);
 		

@@ -15,6 +15,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,21 +33,6 @@ import lombok.ToString;
 @Entity
 @Table(name = "series", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class Series implements Comparable<Series> {
-	
-//	public Series(String id, String name, int ageLimit, String trailer, String cast, String genre, float length,
-//			String releaseDate, String language, int noOfEpisodes) throws InvalidIdLengthException, InvalidNameException {
-//		super();
-//		this.setId(id);
-//		this.setName(name);
-//		this.ageLimit = ageLimit;
-//		this.trailer = trailer;
-//		this.cast = cast;
-//		this.genre = genre;
-//		this.length = length;
-//		this.releaseDate = releaseDate;
-//		this.language = language;
-//		this.noOfEpisodes = noOfEpisodes;
-//	}
 	
 	@Id
 	@Column(name = "serId")
@@ -66,6 +53,7 @@ public class Series implements Comparable<Series> {
 	@Min(value = 1)
 	private int noOfEpisodes;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
 	private List<Episode> episodes = new ArrayList<Episode>();
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Subscription;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.repository.SubscriptionRepository;
 import com.zee.zee5app.service.SubscriptionService;
@@ -18,19 +19,23 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	private SubscriptionRepository subscriptionRepository;
 
 	@Override
-	public String addSubscription(Subscription subscription) {
+	public Subscription addSubscription(Subscription subscription) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
+		if(subscriptionRepository.existsById(subscription.getId())) {
+			throw new AlreadyExistsException("This record already exists");
+		}
 		Subscription subscription2 = subscriptionRepository.save(subscription);
-		if (subscription2!=null)
-			return "Success";
-		else
-			return "Fail";
+		return subscription2;
 	}
 
 	@Override
-	public Optional<Subscription> getSubscriptionById(String id) {
+	public Optional<Subscription> getSubscriptionById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return subscriptionRepository.findById(id);
+		Optional<Subscription> optional = subscriptionRepository.findById(id);
+		if (optional.isEmpty()) {
+			throw new IdNotFoundException("Id does not exist");
+		}
+		return optional;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Movie;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.repository.MovieRepository;
 import com.zee.zee5app.service.MovieService;
@@ -18,19 +19,23 @@ public class MovieServiceImpl implements MovieService {
 	private MovieRepository movieRepository;
 
 	@Override
-	public String addMovie(Movie movie) {
+	public Movie addMovie(Movie movie) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
+		if(movieRepository.existsById(movie.getId())) {
+			throw new AlreadyExistsException("This record already exists");
+		}
 		Movie movie2 = movieRepository.save(movie);
-		if (movie2!=null)
-			return "Success";
-		else
-			return "Fail";
+		return movie2;
 	}
 
 	@Override
-	public Optional<Movie> getMovieById(String id) {
+	public Optional<Movie> getMovieById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return movieRepository.findById(id);
+		Optional<Movie> optional = movieRepository.findById(id);
+		if (optional.isEmpty()) {
+			throw new IdNotFoundException("Id does not exist");
+		}
+		return optional;
 	}
 
 	@Override

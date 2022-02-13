@@ -12,6 +12,10 @@ spring:
     hibernate:
       naming:
         physical-strategy: com.zee.zee5app.utils.CustomNamingStrategy
-      ddl-auto: update     
+      ddl-auto: update
 server:
   port: 9005
+zee5app:
+  app:
+    jwtSecret: secretKey
+    jwtExpirationMs: 86400000

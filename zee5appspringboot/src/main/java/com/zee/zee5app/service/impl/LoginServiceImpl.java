@@ -1,5 +1,6 @@
 package com.zee.zee5app.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,10 @@ public class LoginServiceImpl implements LoginService {
 	private LoginRepository loginRepository;
 
 	@Override
-	public String addCredentials(Login login) {
+	public Login addCredentials(Login login) {
 		// TODO Auto-generated method stub
 		Login login2 = loginRepository.save(login);
-		if (login2!=null)
-			return "Success";
-		else
-			return "Fail";
+		return login2;
 	}
 
 	@Override
@@ -49,6 +47,12 @@ public class LoginServiceImpl implements LoginService {
 	public String changeRole(String username, EROLE role) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Optional<List<Login>> getAllLoginDetails() {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(loginRepository.findAll());
 	}
 
 }

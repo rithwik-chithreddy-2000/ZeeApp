@@ -5,9 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zee.zee5app.dto.Login;
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.repository.LoginRepository;
@@ -26,46 +27,51 @@ public class UserServiceImpl implements UserService {
 	private LoginRepository loginRepository;
 	
 	@Override
-	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
-	public String addUser(Register register) throws AlreadyExistsException {
+	@Transactional(rollbackFor = AlreadyExistsException.class)
+	public User addUser(User register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
-		if(userRepository.existsByEmailAndContactNumber(register.getEmail(), register.getContactNumber())) {
+		if(userRepository.existsByEmail(register.getEmail())) {
 			throw new AlreadyExistsException("This record already exists");
 		}
-		Register register2 = userRepository.save(register);
+		register.setPassword(register.getPassword());
+		User register2 = userRepository.save(register);
 		if (register2!=null) {
-			Login login = new Login(register2.getEmail(), register2.getPassword(), register2.getId());
+			Login login = new Login(register2.getEmail(), register2.getPassword(), register2);
 			if (loginRepository.existsByUsername(login.getUsername())) {
 				throw new AlreadyExistsException("This record already exists");
 			}
-			String result = loginService.addCredentials(login);
-			if (result.equals("Success"))
-				return "Success";
+			Login result = loginService.addCredentials(login);
+			if (result!=null)
+				return register2;
 			else
-				return "Fail";
+				return null;
 		}
 		else
-			return "Fail";
+			return null;
 	}
 	
 	@Override
-	public Optional<Register> getUserById(String id) {
+	public Optional<User> getUserById(Long id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return userRepository.findById(id);
+		Optional<User> optional = userRepository.findById(id);
+		if (optional.isEmpty()) {
+			throw new IdNotFoundException("Id does not exist");
+		}
+		return optional;
 	}
 
 	@Override
-	public Register[] getAllUsers() {
+	public User[] getAllUsers() {
 		// TODO Auto-generated method stub
-		List<Register> list = userRepository.findAll();
-		Register[] registers = new Register[list.size()];
+		List<User> list = userRepository.findAll();
+		User[] registers = new User[list.size()];
 		return list.toArray(registers);
 	}
 
 	@Override
-	public String deleteUserById(String id) throws IdNotFoundException {
+	public String deleteUserById(Long id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		Optional<Register> optional = this.getUserById(id);
+		Optional<User> optional = this.getUserById(id);
 		if (optional.isEmpty())
 			throw new IdNotFoundException("Record not found");
 		else {
@@ -75,9 +81,18 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public Optional<List<Register>> getAllUserDetails() {
+	public Optional<List<User>> getAllUserDetails() {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(userRepository.findAll());
+	}
+	
+	@Override
+	public User updateUser(User register) throws IdNotFoundException {
+		// TODO Auto-generated method stub
+		if(userRepository.findById(register.getId()).isEmpty()) {
+			throw new IdNotFoundException("Record not found");
+		}
+		return userRepository.save(register);
 	}
 
 }

@@ -6,13 +6,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.Episode;
 import com.zee.zee5app.dto.Series;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.service.EpisodeService;
 
 //@SpringBootApplication
 public class TestEpisodeApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IdNotFoundException, AlreadyExistsException {
 		ConfigurableApplicationContext applicationContext =
 				SpringApplication.run(TestEpisodeApplication.class, args);
 		

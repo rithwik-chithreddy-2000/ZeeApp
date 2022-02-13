@@ -1,8 +1,14 @@
 package com.zee.zee5app;
 
+import java.math.BigInteger;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import com.zee.zee5app.dto.User;
+import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.service.UserService;
 
 @SpringBootApplication
 public class Zee5appspringbootApplication {
@@ -14,7 +20,7 @@ public class Zee5appspringbootApplication {
 //		RoleRepository roleRepository = applicationContext.getBean(RoleRepository.class);
 //		UserService userService = applicationContext.getBean(UserService.class);
 //		
-//		Register register = new Register("reg0006", "Rithwik6", "Chithreddy6", "rithwik6@gmail.com", "rith1236", new BigInteger("9321654876"), null);
+//		Register register = new Register("reg0006", "Rithwik6", "Chithreddy6", "rithwik6@gmail.com", "rith1236", new BigDecimal("9321654876"), null);
 //		Set<Role> roles = new HashSet<Role>();
 //		roles.add(roleRepository.findById(1).get());
 //		roles.add(roleRepository.findById(2).get());
@@ -65,6 +71,7 @@ public class Zee5appspringbootApplication {
 //		}
 		
 //		applicationContext.close();
+		
 	}
 
 }
