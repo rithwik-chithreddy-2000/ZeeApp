@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
 		if(userRepository.existsByEmail(register.getEmail())) {
 			throw new AlreadyExistsException("This record already exists");
 		}
-		register.setPassword(register.getPassword());
 		User register2 = userRepository.save(register);
 		if (register2!=null) {
 			Login login = new Login(register2.getEmail(), register2.getPassword(), register2);
