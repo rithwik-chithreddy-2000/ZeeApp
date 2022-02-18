@@ -10,8 +10,7 @@ import com.learning.entity.User;
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
 	
-	Optional<User> findByUsername(String username);
-	Boolean existsByUsername(String username);
+	Optional<User> findByEmail(String email);
 //	Checking the email exists in the user table
 	Boolean existsByEmail(String email);
 

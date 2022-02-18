@@ -31,11 +31,10 @@ import lombok.ToString;
 @NoArgsConstructor
 //@AllArgsConstructor
 @Entity
-@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
 
-	public User(String username, String email, String name, String password, String address) {
-		this.username = username;
+	public User(String email, String name, String password, String address) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
@@ -47,9 +46,6 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Size(max = 50)
-	@NotBlank
-	private String username;
 	@Size(max = 50)
 	@Email
 	private String email;

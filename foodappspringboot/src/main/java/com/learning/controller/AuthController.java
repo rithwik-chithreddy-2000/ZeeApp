@@ -48,19 +48,13 @@ public class AuthController {
 //	POST request for adding user
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
-		if (userRepo.existsByUsername(signupRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
-		}
 		if (userRepo.existsByEmail(signupRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
 		
-		User user = new User(signupRequest.getUsername(),
-				signupRequest.getEmail(),
+		User user = new User(signupRequest.getEmail(),
 				signupRequest.getName(),
 				passwordEncoder.encode(signupRequest.getPassword()),
 				signupRequest.getAddress());
@@ -100,7 +94,7 @@ public class AuthController {
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+				.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
 						loginRequest.getPassword()));
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -113,7 +107,6 @@ public class AuthController {
 		
 		return ResponseEntity.ok(new JwtResponse(jwt,
 				userDetailsImpl.getId(),
-				userDetailsImpl.getUsername(),
 				userDetailsImpl.getEmail(),
 				roles));
 	}

@@ -1,5 +1,6 @@
 package com.learning.payload.request;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
@@ -8,7 +9,8 @@ import lombok.Data;
 public class LoginRequest {
 	
 	@NotBlank
-	private String username;
+	@Email
+	private String email;
 	
 	@NotBlank
 	private String password;
