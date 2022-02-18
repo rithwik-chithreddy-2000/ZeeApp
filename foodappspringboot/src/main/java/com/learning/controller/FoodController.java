@@ -1,8 +1,6 @@
 package com.learning.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import com.learning.entity.Food;
 import com.learning.entity.TYPE;
 import com.learning.exception.AlreadyExistsException;
 import com.learning.exception.IdNotFoundException;
+import com.learning.payload.response.MessageResponse;
 import com.learning.service.FoodService;
 
 @RestController
@@ -57,14 +56,12 @@ public class FoodController {
 	}
 	
 //	GET request for retrieving all food items
-	@GetMapping("")
+	@GetMapping("/")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<?> getAllFood() {
 		Optional<List<Food>> optional = foodService.getAllFoods();
 		if (optional.isEmpty()) {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("message", "No record found");
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(map);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new MessageResponse("No record found"));
 		}
 		return ResponseEntity.ok(optional.get());
 	}
@@ -75,9 +72,7 @@ public class FoodController {
 	public ResponseEntity<?> getFoodByType(@PathVariable("type") TYPE foodType) {
 		Optional<List<Food>> optional = foodService.getByFoodType(foodType);
 		if (optional.isEmpty()) {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("message", "Sorry Food Not Found");
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(map);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new MessageResponse("Sorry Food Not Found"));
 		}
 		return ResponseEntity.ok(optional.get());
 	}
@@ -87,9 +82,7 @@ public class FoodController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteFoodById(@PathVariable("id") int id) throws IdNotFoundException {
 		foodService.deleteFood(id);
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("message", "Food item deleted");
-		return ResponseEntity.status(200).body(map);
+		return ResponseEntity.status(200).body(new MessageResponse("Food item deleted"));
 	}
 
 }

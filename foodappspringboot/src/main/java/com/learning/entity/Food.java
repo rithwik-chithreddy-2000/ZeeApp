@@ -38,6 +38,8 @@ public class Food {
 	@Min(value = 1)
 	private float foodCost;
 	@NotBlank
+	private String description;
+	@NotBlank
 	private String foodPic;
 	
 	@Enumerated(EnumType.STRING)
