@@ -118,7 +118,6 @@ public class AuthController {
 	
 	@GetMapping("/")
 	public ResponseEntity<?> getUser() {
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 		Long id = userDetailsImpl.getId();
