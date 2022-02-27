@@ -1,6 +1,8 @@
 package com.learning.controller;
+import java.net.http.HttpHeaders;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,10 +15,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.learning.entity.EROLE;
 import com.learning.entity.Role;
@@ -30,8 +35,9 @@ import com.learning.repo.UserRepo;
 import com.learning.security.jwt.JwtUtils;
 import com.learning.security.services.UserDetailsImpl;
 
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthController {
 	
 	@Autowired
@@ -85,6 +91,7 @@ public class AuthController {
 		}
 		user.setRoles(roles);
 		userRepo.save(user);
+		
 		return ResponseEntity
 				.status(201)
 				.body(new MessageResponse("User created successfully"));
@@ -109,6 +116,25 @@ public class AuthController {
 				userDetailsImpl.getId(),
 				userDetailsImpl.getEmail(),
 				roles));
+	}
+	
+	@GetMapping("/")
+	public ResponseEntity<?> getUser() {
+//		if (jwtUtils.validateJwtToken(token)) {
+//			String email = jwtUtils.getUsernameFromJwtToken(token);
+//			User user = userRepo.findByEmail(email).get();
+//			user.setPassword(null);
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		Long id = userDetailsImpl.getId();
+		Optional<User> optional = userRepo.findById(id);
+		return ResponseEntity.ok(optional.get());
+//			return ResponseEntity.ok(user);
+//		}
+//		else {
+//			return ResponseEntity.badRequest().body(new MessageResponse("Bad credentials"));
+//		}
 	}
 
 }

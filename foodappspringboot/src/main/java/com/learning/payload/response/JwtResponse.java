@@ -10,19 +10,19 @@ public class JwtResponse {
 	private String email;
 	private List<String> roles;
 
-	public JwtResponse(String accessToken, Long id, String email, List<String> roles) {
-		this.token = accessToken;
+	public JwtResponse(String token, Long id, String email, List<String> roles) {
+		this.token = token;
 		this.id = id;
 		this.email = email;
 		this.roles = roles;
 	}
 
-	public String getAccessToken() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setAccessToken(String accessToken) {
-		this.token = accessToken;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public String getTokenType() {
