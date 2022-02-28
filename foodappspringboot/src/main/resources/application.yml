@@ -13,6 +13,9 @@ spring:
       naming:
         physical-strategy: com.learning.utils.CustomNamingStrategy
       ddl-auto: update
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 server:
   port: 9005
 learning:

@@ -46,12 +46,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(User register, Long id) throws IdNotFoundException {
+	public User updateUser(User user, Long id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		if (userRepo.findById(id).isEmpty()) {
 			throw new IdNotFoundException("Sorry user with "+ id +" not found");
 		}
-		return userRepo.save(register);
+		user.setId(id);
+		return userRepo.save(user);
 	}
 
 	@Override

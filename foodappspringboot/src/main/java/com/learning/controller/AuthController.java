@@ -1,4 +1,5 @@
 package com.learning.controller;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -118,11 +119,16 @@ public class AuthController {
 	
 	@GetMapping("/")
 	public ResponseEntity<?> getUser() {
+		try {
 		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 		Long id = userDetailsImpl.getId();
 		Optional<User> optional = userRepo.findById(id);
 		return ResponseEntity.ok(optional.get());
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.ok(null);
+		}
 	}
 
 }

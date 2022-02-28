@@ -30,18 +30,18 @@ public class FoodServiceImpl implements FoodService {
 		if(foodRepo.existsById(food.getId())) {
 			throw new AlreadyExistsException("This record already exists");
 		}
-		String des = "C:\\Users\\rithwik.chithreddy\\Downloads\\foodPicStore\\";
-		String src = food.getFoodPic();
-		File file = new File(src);
-		byte[] data = null;
-		try {
-			data = fileUtils.readFile(file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		fileUtils.writeFile(data, des + file.getName());
-		food.setFoodPic(des + file.getName());
+//		String des = "C:\\Users\\rithwik.chithreddy\\Downloads\\foodPicStore\\";
+//		String src = food.getFoodPic();
+//		File file = new File(src);
+//		byte[] data = null;
+//		try {
+//			data = fileUtils.readFile(file);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		fileUtils.writeFile(data, des + file.getName());
+//		food.setFoodPic(des + file.getName());
 		return foodRepo.save(food);
 	}
 
@@ -67,6 +67,7 @@ public class FoodServiceImpl implements FoodService {
 		if (foodRepo.findById(id).isEmpty()) {
 			throw new IdNotFoundException("Sorry Food Not Found");
 		}
+		food.setId(id);
 		return foodRepo.save(food);
 	}
 

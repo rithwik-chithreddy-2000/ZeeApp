@@ -1,6 +1,8 @@
 package com.learning.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -58,6 +60,11 @@ public class User {
 	@Size(max = 50)
 	@NotBlank
 	private String address;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "cart", joinColumns = @JoinColumn(name = "userId"),
+	inverseJoinColumns = @JoinColumn(name  = "foodId"))
+	private List<Food> cart = new ArrayList<Food>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "userId"),
